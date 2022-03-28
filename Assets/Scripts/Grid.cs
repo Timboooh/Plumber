@@ -4,53 +4,62 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-
+    public Vector3Int Size = new Vector3Int(8, 8, 8);
     private Pipe[,,] ObjectGrid = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        ObjectGrid = new Pipe[8, 8, 8];
+        ObjectGrid = new Pipe[Size.x, Size.y, Size.z];
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void SnapToGrid(Pipe pipeObject, bool add = false)
+    public bool CanAddToGrid(Pipe pipe, Vector3Int gridPosition)
     {
-        var currentPosition = pipeObject.transform.localPosition;
-        Debug.LogWarning("SnapToGrid started:" + currentPosition.ToString());
-      
-        var newPositionFloat = new Vector3(
-                        Mathf.Clamp(currentPosition.x, 0, 8),
-                        Mathf.Clamp(currentPosition.y, 0, 8),
-                        Mathf.Clamp(currentPosition.z, 0, 8));
-
-        var newPositionInt = Vector3Int.RoundToInt(newPositionFloat);
-
-        if(ObjectGrid[newPositionInt.x, newPositionInt.y, newPositionInt.z] == null)
+        //Check if pipe is within grid
+        if (!(gridPosition.x <= Size.x && gridPosition.x >= 0 &&
+              gridPosition.y <= Size.y && gridPosition.y >= 0 &&
+              gridPosition.z <= Size.z && gridPosition.z >= 0))
         {
-            pipeObject.transform.localPosition = newPositionInt;
-            pipeObject.transform.rotation = Quaternion.identity;
+            Debug.LogError("Pipe " + pipe + "is not within the grid");
+            return false;
+        }
 
-            Debug.LogWarning("SnapToGrid done:" + newPositionInt.ToString());
+        //Check if spot is available
+        if (ObjectGrid[gridPosition.x, gridPosition.y, gridPosition.z] != null)
+        {
+            Debug.LogWarning("Spot already occupied");
+            return false;
+        }
 
-            var rigidbody = pipeObject.gameObject.GetComponent<Rigidbody>();
+        //Check if spot has pipes to attach to
+        //TODO
+        if (false)
+        {
+            return false;
+        }
 
-            rigidbody.useGravity = false;
-            rigidbody.isKinematic = true;
-
-            if (add) AddToGrid(pipeObject);
-        }        
+        return true;
     }
 
-    public void AddToGrid(Pipe pipeObject, Vector3Int? position = null)
+    public bool AddToGrid(Pipe pipe, Vector3Int gridPosition, Vector3 wantedRotation)
     {
-        if (!position.HasValue) position = Vector3Int.RoundToInt(pipeObject.transform.localPosition);
+        if (!CanAddToGrid(pipe, gridPosition)) return false;
 
-        ObjectGrid[position.Value.x, position.Value.y, position.Value.z] = pipeObject;
+        //Add pipe to spot
+        ObjectGrid[gridPosition.x, gridPosition.y, gridPosition.z] = pipe;
+        pipe.IsInGrid = true;
+        return true;
+    }
+
+    public void RemoveFromGrid(Pipe pipe)
+    {
+        pipe.IsInGrid = false;
+        ObjectGrid[pipe.Position.x, pipe.Position.y, pipe.Position.z] = null;
     }
 }

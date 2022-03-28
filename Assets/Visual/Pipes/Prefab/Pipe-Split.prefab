@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4613150830120451730}
   - component: {fileID: 4613150830120451731}
   - component: {fileID: 4613150830120451732}
+  - component: {fileID: 5577792628514204762}
   - component: {fileID: 6151754385881334152}
   m_Layer: 0
   m_Name: Pipe-Split
@@ -259,6 +260,24 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: {fileID: 0}
+--- !u!114 &5577792628514204762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4613150830120451737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d008280fa519944ebdd1ada58f05490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XPos: 0
+  XNeg: 0
+  YPos: 1
+  YNeg: 1
+  ZPos: 1
+  ZNeg: 0
 --- !u!114 &6151754385881334152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f6eb3f7726c8849a62136248fb4ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPipe: 0
-  EndPipe: 0
+  Connections: {fileID: 0}
   Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0}
