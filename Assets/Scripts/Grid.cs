@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public int xGridPlaces = 8;
-    public int yGridPlaces = 8;
-    public int zGridPlaces = 8;
 
     private Pipe[,,] ObjectGrid = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        ObjectGrid = new Pipe[xGridPlaces, yGridPlaces, zGridPlaces];
+        ObjectGrid = new Pipe[8, 8, 8];
     }
 
     // Update is called once per frame
@@ -28,9 +25,9 @@ public class Grid : MonoBehaviour
         Debug.LogWarning("SnapToGrid started:" + currentPosition.ToString());
       
         var newPositionFloat = new Vector3(
-                        Mathf.Clamp(currentPosition.x, 0, xGridPlaces),
-                        Mathf.Clamp(currentPosition.y, 0, xGridPlaces),
-                        Mathf.Clamp(currentPosition.z, 0, xGridPlaces));
+                        Mathf.Clamp(currentPosition.x, 0, 8),
+                        Mathf.Clamp(currentPosition.y, 0, 8),
+                        Mathf.Clamp(currentPosition.z, 0, 8));
 
         var newPositionInt = Vector3Int.RoundToInt(newPositionFloat);
 

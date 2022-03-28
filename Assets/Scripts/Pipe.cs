@@ -9,6 +9,8 @@ public class Pipe : MonoBehaviour
     public bool EndPipe = false;
 
     public Vector3 Position;
+    public Vector3 Rotation;
+
     private bool IsInGrid = false;
 
     private Grid parentGrid;
