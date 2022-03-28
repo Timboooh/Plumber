@@ -38,18 +38,26 @@ public class Grid : MonoBehaviour
         }
 
         //Check if spot has pipes to attach to
-        //TODO
-        if (false)
+        Vector3Int[] spotsToCheck = pipe.Connections.GetSpotsToCheck();
+        bool foundSpot = false;
+        int checkingIndex = 0;
+        while (!foundSpot)
         {
+            Vector3Int newSpot = gridPosition + spotsToCheck[checkingIndex];
+            foundSpot = (ObjectGrid[newSpot.x, newSpot.y, newSpot.z] != null);
+        }
+        if (!foundSpot)
+        {
+            Debug.LogWarning("Pipe not able to attach to other pipe");
             return false;
         }
 
         return true;
     }
 
-    public bool AddToGrid(Pipe pipe, Vector3Int gridPosition, Vector3 wantedRotation)
+    public bool AddToGrid(Pipe pipe, Vector3Int gridPosition, Vector3 wantedRotation, bool ignoreChecks = false)
     {
-        if (!CanAddToGrid(pipe, gridPosition)) return false;
+        if (!ignoreChecks && !CanAddToGrid(pipe, gridPosition)) return false;
 
         //Add pipe to spot
         ObjectGrid[gridPosition.x, gridPosition.y, gridPosition.z] = pipe;

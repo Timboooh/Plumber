@@ -278,6 +278,12 @@ MonoBehaviour:
   YNeg: 1
   ZPos: 0
   ZNeg: 0
+  oriXPos: 0
+  oriXNeg: 0
+  oriYPos: 1
+  oriYNeg: 1
+  oriZPos: 0
+  oriZNeg: 0
 --- !u!114 &2898280345731446434
 MonoBehaviour:
   m_ObjectHideFlags: 0

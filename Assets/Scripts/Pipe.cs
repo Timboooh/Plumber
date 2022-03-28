@@ -28,7 +28,7 @@ public class Pipe : MonoBehaviour
         }
     }
 
-    private Grid parentGrid;
+    public Grid parentGrid;
     private Rigidbody rigidbody;
     
     void Start()
