@@ -6,19 +6,12 @@ using ExtensionMethods;
 
 public class ConnectionHandler : MonoBehaviour
 {
-    //public bool XPos, XNeg, YPos, YNeg, ZPos, ZNeg = false;
     public Vector3Int[] ConnectionVectors = new Vector3Int[6];
     
     public bool oriXPos, oriXNeg, oriYPos, oriYNeg, oriZPos, oriZNeg;
 
     public ConnectionHandler()
     {
-        //oriXPos = XPos;
-        //oriXNeg = XNeg;
-        //oriYPos = YPos;
-        //oriYNeg = YNeg;
-        //oriZPos = ZPos;
-        //oriZNeg = ZNeg;
 
     }
 
@@ -31,16 +24,9 @@ public class ConnectionHandler : MonoBehaviour
     {
         Debug.LogWarning($"{angles.x}:{angles.y}:{angles.z}");
 
-        //XPos = oriXPos;
-        //XNeg = oriXNeg;
-        //YPos = oriYPos;
-        //YNeg = oriYNeg;
-        //ZPos = oriZPos;
-        //ZNeg = oriZNeg;
 
         var originalVects = BoolToVect3(oriXPos, oriXNeg, oriYPos, oriYNeg, oriZPos, oriZNeg);
         var rotatedVects = RotateVects(originalVects, angles);
-        //Vect3ToBool(rotatedVects, out XPos, out XNeg, out YPos, out YNeg, out ZPos, out ZNeg);
         ConnectionVectors = rotatedVects;
     }
 
@@ -73,25 +59,4 @@ public class ConnectionHandler : MonoBehaviour
 
         return vects;
     }
-
-    //private void Vect3ToBool(Vector3Int[] vects, out bool xPos, out bool xNeg, out bool yPos, out bool yNeg, out bool zPos, out bool zNeg)
-    //{
-    //    xPos = xNeg = yPos = yNeg = zPos = zNeg = false;
-    //
-    //    foreach (var vect in vects)
-    //    {
-    //        if (vect == Vector3Int.right)
-    //            xPos = true;
-    //        else if (vect == Vector3Int.left)
-    //            xNeg = true;
-    //        else if (vect == Vector3Int.up)
-    //            yPos = true;
-    //        else if (vect == Vector3Int.down)
-    //            yNeg = true;
-    //        else if (vect == Vector3Int.forward)
-    //            zPos = true;
-    //        else if (vect == Vector3Int.back)
-    //            zNeg = true;
-    //    }
-    //}
 }
