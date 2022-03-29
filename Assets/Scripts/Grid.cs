@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public Vector3Int Size = new Vector3Int(8, 8, 8);
+    public readonly Vector3Int Size = new Vector3Int(9, 9, 9);
     private Pipe[,,] ObjectGrid = null;
 
     // Start is called before the first frame update
@@ -22,9 +23,7 @@ public class Grid : MonoBehaviour
     public bool CanAddToGrid(Pipe pipe, Vector3Int gridPosition)
     {
         //Check if pipe is within grid
-        if (!(gridPosition.x <= Size.x && gridPosition.x >= 0 &&
-              gridPosition.y <= Size.y && gridPosition.y >= 0 &&
-              gridPosition.z <= Size.z && gridPosition.z >= 0))
+        if (!IsInGrid(gridPosition))
         {
             Debug.LogError("Pipe " + pipe + "is not within the grid");
             return false;
@@ -41,10 +40,14 @@ public class Grid : MonoBehaviour
         Vector3Int[] spotsToCheck = pipe.Connections.GetSpotsToCheck();
         bool foundSpot = false;
         int checkingIndex = 0;
-        while (!foundSpot)
+        while (!foundSpot && checkingIndex < spotsToCheck.Length)
         {
             Vector3Int newSpot = gridPosition + spotsToCheck[checkingIndex];
-            foundSpot = (ObjectGrid[newSpot.x, newSpot.y, newSpot.z] != null);
+
+            if (IsInGrid(newSpot))
+                foundSpot = (ObjectGrid[newSpot.x, newSpot.y, newSpot.z] != null);
+
+            checkingIndex++;
         }
         if (!foundSpot)
         {
@@ -60,6 +63,8 @@ public class Grid : MonoBehaviour
         if (!ignoreChecks && !CanAddToGrid(pipe, gridPosition)) return false;
 
         //Add pipe to spot
+
+        Debug.Log($"X: {gridPosition.x}, Y: {gridPosition.y} Z: {gridPosition.z}");
         ObjectGrid[gridPosition.x, gridPosition.y, gridPosition.z] = pipe;
         pipe.IsInGrid = true;
         return true;
@@ -69,5 +74,12 @@ public class Grid : MonoBehaviour
     {
         pipe.IsInGrid = false;
         ObjectGrid[pipe.Position.x, pipe.Position.y, pipe.Position.z] = null;
+    }
+
+    private bool IsInGrid(Vector3Int position)
+    {
+        return position.x < Size.x && position.x >= 0 &&
+               position.y < Size.y && position.y >= 0 &&
+               position.z < Size.z && position.z >= 0;
     }
 }

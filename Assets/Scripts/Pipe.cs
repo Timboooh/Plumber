@@ -51,7 +51,7 @@ public class Pipe : MonoBehaviour
         rigidbody.isKinematic = newValue;
         rigidbody.useGravity = !newValue;
     }
-
+    
     public void OnPickup()
     {
         parentGrid.RemoveFromGrid(this);
@@ -65,7 +65,9 @@ public class Pipe : MonoBehaviour
         //Round position
         var WantedPosition = Vector3Int.RoundToInt(gameObject.transform.localPosition);
         var WantedRotation = gameObject.transform.localRotation.eulerAngles.RoundToNearestMultiple(90);
-        
+
+        Connections.UpdateConnections(WantedRotation);
+
         //Try to add to the grid
         if (parentGrid.AddToGrid(this, WantedPosition, WantedRotation)) 
         {

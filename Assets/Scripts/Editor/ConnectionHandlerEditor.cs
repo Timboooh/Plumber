@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using ExtensionMethods;
 
 [CustomEditor(typeof(ConnectionHandler))]
 public class ConnectionHandlerEditor : Editor
@@ -11,7 +12,9 @@ public class ConnectionHandlerEditor : Editor
         if(GUILayout.Button("Update Position"))
         {
             ConnectionHandler handler = (ConnectionHandler)target;
-            handler.UpdateConnections();
+
+            var WantedRotation = handler.gameObject.transform.localEulerAngles.RoundToNearestMultiple(90);
+            handler.UpdateConnections(WantedRotation);
         }
     }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 113918187215773900}
   - component: {fileID: 113918187215773898}
   - component: {fileID: 8012904147724690743}
+  - component: {fileID: 6261764205301828624}
   - component: {fileID: 4989533744264536113}
   - component: {fileID: 2898280345731446434}
   m_Layer: 0
@@ -182,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffefbea063cab884ca33e5a449e5c22c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attachmentFlags: 60
+  attachmentFlags: 28
   attachmentOffset: {fileID: 0}
   catchingSpeedThreshold: -1
   releaseVelocityStyle: 1
@@ -260,6 +261,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: {fileID: 0}
+--- !u!114 &6261764205301828624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113918187215773907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 783750eec4c41da428b7651515146d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocityAverageFrames: 5
+  angularVelocityAverageFrames: 11
+  estimateOnAwake: 0
 --- !u!114 &4989533744264536113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,3 +315,4 @@ MonoBehaviour:
   Connections: {fileID: 0}
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
+  parentGrid: {fileID: 0}

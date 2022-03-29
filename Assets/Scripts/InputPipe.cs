@@ -12,18 +12,23 @@ public class InputPipe : MonoBehaviour
     {
         if (pipe == null) pipe = GetComponent<Pipe>();
 
-        var interactable = GetComponent<Interactable>();
         var throwable = GetComponent<Throwable>();
+        var interactable = GetComponent<Interactable>();
 
-        Destroy(interactable);
         Destroy(throwable);
-
-        pipe.parentGrid.AddToGrid(pipe, Vector3Int.RoundToInt(pipe.transform.localPosition), pipe.transform.localEulerAngles, true);
+        Destroy(interactable);
+        
+        
     }
 
+    bool added = false;
     // Update is called once per frame
     void Update()
     {
-        
+        if (!added)
+        {
+            pipe.parentGrid.AddToGrid(pipe, Vector3Int.RoundToInt(pipe.transform.localPosition), pipe.transform.localEulerAngles, true);
+            added = true;
+        }
     }
 }

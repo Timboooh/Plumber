@@ -22,16 +22,17 @@ public class ConnectionHandler : MonoBehaviour
 
     public void Awake()
     {
-        UpdateConnections();
+        UpdateConnections(gameObject.transform.localEulerAngles);
     }
 
-    public void UpdateConnections()
+    public void UpdateConnections(Vector3 angles)
     {
-        Vector3 angles = gameObject.transform.localEulerAngles;
+        int xRotations = ((int)angles.x+360) / 90 % 4;
+        int yRotations = ((int)angles.y+360) / 90 % 4;
+        int zRotations = ((int)angles.z+360) / 90 % 4;
 
-        int xRotations = (int)angles.x / 90 % 4;
-        int yRotations = (int)angles.y / 90 % 4;
-        int zRotations = (int)angles.z / 90 % 4;
+        Debug.LogWarning($"{angles.x}:{angles.y}:{angles.z}");
+        Debug.LogWarning($"{xRotations}:{yRotations}:{zRotations}");
 
         XPos = oriXPos;
         XNeg = oriXNeg;
