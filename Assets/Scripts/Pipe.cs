@@ -38,6 +38,9 @@ public class Pipe : MonoBehaviour
 
         if (Connections == null) Connections = GetComponent<ConnectionHandler>();
         if (Connections == null) Connections = new ConnectionHandler();
+
+        //var WantedRotation = gameObject.transform.localEulerAngles.RoundToNearestMultiple(90);
+        //Connections.UpdateConnections(WantedRotation);
     }
 
     // Update is called once per frame
@@ -81,9 +84,14 @@ public class Pipe : MonoBehaviour
     {
     }
 
-    public bool CanConnectTo(Pipe pipe)
+    public bool CanConnectTo(Pipe pipe, Vector3Int connectionPoint)
     {
-
+        connectionPoint *= -1; //Invert vector
+        foreach(var connectionVector in Connections.ConnectionVectors)
+        {
+            if (connectionPoint == connectionVector) return true;
+        }
+        return false;
     }
 
     public override string ToString()

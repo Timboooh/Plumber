@@ -37,23 +37,38 @@ public class Grid : MonoBehaviour
         }
 
         //Check if spot has pipes to attach to
-        Vector3Int[] spotsToCheck = pipe.Connections.GetSpotsToCheck();
+        Vector3Int[] spotsToCheck = pipe.Connections.ConnectionVectors;
         bool foundPipe = false;
-        int checkingIndex = 0;
+        int checkingIndex = -1;
         do
         {
-            Vector3Int newSpot = gridPosition + spotsToCheck[checkingIndex];
+            checkingIndex++;
+
+            Vector3Int connectionVector = Vector3Int.zero;
+            try
+            {
+                connectionVector = spotsToCheck[checkingIndex];
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            if (connectionVector == Vector3Int.zero) continue;
+
+            Vector3Int newSpot = gridPosition + connectionVector;
 
             if (IsInGrid(newSpot))
             {
-                var foundObject = ObjectGrid[newSpot.x, newSpot.y, newSpot.z];
-                foundPipe = foundObject.CanConnectTo(pipe);
+                Pipe foundObject = ObjectGrid[newSpot.x, newSpot.y, newSpot.z];
+                //UNT0008 https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0008.md
+                //foundPipe = foundObject?.CanConnectTo(pipe, connectionVector) == true;
+                foundPipe = foundObject != null && foundObject.CanConnectTo(pipe, connectionVector);
             }
 
-            checkingIndex++;
-        } while (!foundPipe && checkingIndex < spotsToCheck.Length);
+        } while (!foundPipe && checkingIndex < spotsToCheck.Length-1);
 
-        if (foundObject == null)
+        if (!foundPipe)
         {
             Debug.LogWarning("Pipe not able to attach to other pipe");
             return false;
