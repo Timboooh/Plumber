@@ -81,6 +81,11 @@ public class Pipe : MonoBehaviour
     {
     }
 
+    public bool CanConnectTo(Pipe pipe)
+    {
+
+    }
+
     public override string ToString()
     {
         return "Pipe: " + Position.x + " - " + Position.y + " - " + Position.z;

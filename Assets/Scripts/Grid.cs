@@ -38,18 +38,22 @@ public class Grid : MonoBehaviour
 
         //Check if spot has pipes to attach to
         Vector3Int[] spotsToCheck = pipe.Connections.GetSpotsToCheck();
-        bool foundSpot = false;
+        bool foundPipe = false;
         int checkingIndex = 0;
-        while (!foundSpot && checkingIndex < spotsToCheck.Length)
+        do
         {
             Vector3Int newSpot = gridPosition + spotsToCheck[checkingIndex];
 
             if (IsInGrid(newSpot))
-                foundSpot = (ObjectGrid[newSpot.x, newSpot.y, newSpot.z] != null);
+            {
+                var foundObject = ObjectGrid[newSpot.x, newSpot.y, newSpot.z];
+                foundPipe = foundObject.CanConnectTo(pipe);
+            }
 
             checkingIndex++;
-        }
-        if (!foundSpot)
+        } while (!foundPipe && checkingIndex < spotsToCheck.Length);
+
+        if (foundObject == null)
         {
             Debug.LogWarning("Pipe not able to attach to other pipe");
             return false;
@@ -63,7 +67,6 @@ public class Grid : MonoBehaviour
         if (!ignoreChecks && !CanAddToGrid(pipe, gridPosition)) return false;
 
         //Add pipe to spot
-
         Debug.Log($"X: {gridPosition.x}, Y: {gridPosition.y} Z: {gridPosition.z}");
         ObjectGrid[gridPosition.x, gridPosition.y, gridPosition.z] = pipe;
         pipe.IsInGrid = true;
